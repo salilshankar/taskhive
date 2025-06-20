@@ -1,0 +1,53 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*.so
+*.pyc
+
+# Environment variables and config
+.env
+*.env
+keys/
+
+# macOS system files
+.DS_Store
+
+# Virtual environment
+venv/
+env/
+.pipenv/
+.pdm/
+.mypy_cache/
+.pyre/
+
+# Jupyter/IPython
+.ipynb_checkpoints
+
+# VSCode and PyCharm
+.vscode/
+.idea/
+
+# SQLite database (optional if you don't want to version it)
+instance/
+*.sqlite3
+*.db
+
+# Logs and coverage reports
+*.log
+*.coverage
+htmlcov/
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+
+# Compiled source
+*.pyo
+
+# Test and debug artifacts
+.coverage
+*.pytest_cache/
+
+# Node (if frontend comes later)
+node_modules/

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TaskHive</title>
+
+  <!-- Load custom script FIRST -->
+  <script src="/static/taskhive.js"></script>
+
+  <!-- Then Alpine -->
+  <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+  <link rel="stylesheet" href="/static/index.css">
+</head>
+<body x-data="taskHiveApp()" x-init="loadData()">
+    <h1>📝 TaskHive</h1>
+
+    <h2>Tasks</h2>
+    <form class="form" @submit.prevent="createTask">
+        <input type="text" placeholder="New task title..." x-model="newTask" />
+        <button type="submit">Add</button>
+    </form>
+    <template x-for="task in tasks" :key="task.id">
+        <div class="item">
+            <span x-text="task.title"></span>
+            <span style="cursor:pointer" @click="toggleTask(task)">
+                <span class="status" x-text="task.is_completed ? '✅' : '❌'"></span>
+            </span>
+            <span style="cursor:pointer; color: red; margin-left: 0.5rem;" @click="deleteTask(task.id)">🗑️</span>
+        </div>
+    </template>
+
+    <h2>Notes</h2>
+    <form class="form" @submit.prevent="createNote">
+        <input type="text" placeholder="New note..." x-model="newNote" />
+        <button type="submit">Add</button>
+    </form>
+    <template x-for="note in notes" :key="note.id">
+        <div class="item">
+            <span x-text="note.content"></span>
+            <span style="cursor:pointer; color: red; margin-left: 0.5rem;" @click="deleteNote(note.id)">🗑️</span>
+        </div>
+    </template>
+</body>
+</html>
