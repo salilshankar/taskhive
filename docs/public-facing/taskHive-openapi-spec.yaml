@@ -1,0 +1,276 @@
+openapi: 3.0.0
+info: 
+  title: TaskHive
+  description: TaskHive CRUD REST API endpoints. Use these endpoints to create, see, update, and delete tasks and notes on TaskHive.
+  version: 1.0.0
+servers:
+  - url: http://127.0.0.1:5000/api
+tags: 
+  - name: Notes
+  - name: Tasks
+paths: 
+  /notes:
+    get:
+      tags:
+        - Notes
+      summary: Returns the list of notes stored on the TaskHive platform.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    content:
+                      type: string
+                      description: The notes text content.
+                      example: Points from executive summary.
+                    id:
+                      type: number
+                      description: The note's ID.
+                      example: 2
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: The requested resource was not found.
+          content: {}
+        '500':
+          description: The request was not processed due to an internal error. 
+          content: {} 
+    post:
+      tags:
+        - Notes
+      summary: Adds a note to the TaskHive platform. 
+      requestBody:
+        description: Request payload that contains the data for the note that you want to create.
+        content: 
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+                  example: Executive summary notes.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  content: 
+                    type: string
+                    description: The note's content that you sent in the request payload.
+                    example: Executive summary notes.
+                  id:
+                    type: number
+                    description: The note's ID from the platform.
+                    example: 4
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: The requested resource was not found.
+          content: {}
+        '500':
+          description: The request was not processed due to an internal error. 
+          content: {}
+  /notes/{id}:
+      delete:
+        tags: 
+          - Notes
+        summary: Deletes the note specified using its note ID.
+        parameters:
+          - name: id
+            in: path
+            description: The note's ID that you want to delete.
+            required: true
+            schema:
+              type: number
+        responses:
+          '200':
+            description: Success
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    message:
+                      type: string
+                      description: Message that states that the delete job was successful.
+                      example: Note deleted.
+          '400':
+            description: Bad Request
+            content: {}
+          '404':
+            description: The requested resource was not found.
+            content: {}
+          '500':
+            description: The request was not processed due to an internal error. 
+            content: {}
+  /tasks:
+    get:
+      tags:
+        - Tasks
+      summary: Returns the list of tasks stored on the TaskHive platform.
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: number
+                      description: The task's ID.
+                      example: 2
+                    title:
+                      type: string
+                      description: The task's title.
+                      example: Friday's to-do list.
+                    is_completed:
+                      type: boolean
+                      description: The task's status. Whether `true` or `false`.
+                      example: true
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: The requested resource was not found.
+          content: {}
+        '500':
+          description: The request was not processed due to an internal error. 
+          content: {}
+    post:
+      tags:
+        - Tasks
+      summary: Adds a task to the TaskHive platform.
+      requestBody:
+        description: Request payload that contains the data of the task that you want to create. 
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The task's title.
+                  example: Friday's to-do list.
+                is_completed:
+                  type: boolean
+                  description: The task's status. `true` states that the task is complete. `false` states that the task is incomplete.
+                  example: true
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id: 
+                    type: number
+                    description: The task's ID from the TaskHive platform.
+                    example: 3
+                  title:
+                    type: string
+                    description: The task's title.
+                    example: Friday's to-do list.
+                  is_completed:
+                    type: boolean
+                    description: The task's status. It can be either `true` or `false`.
+                    example: true
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: The requested resource was not found.
+          content: {}
+        '500':
+          description: The request was not processed due to an internal error. 
+          content: {}
+  /tasks/{task_id}:
+    put:
+      tags:
+        - Tasks
+      summary: Updates the task specified using its ID.
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          schema:
+            type: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The task's title.
+                  example: Friday's to-do list.
+                is_completed:
+                  type: boolean
+                  description: The task's status. `true` indicates that the task is complete. `false` indicates that the task is incomplete.
+                  example: false
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                    description: The task's ID.
+                  title:
+                    type: string
+                    description: The task's title.
+                  is_completed:
+                    type: boolean
+                    description: The task's status. `true` indicates that the task is complete. `false` indicates that the task is incomplete.
+        '400':
+          description: Bad Request
+          content: {}
+        '404':
+          description: The requested resource was not found.
+          content: {}
+        '500':
+          description: The request was not processed due to an internal error. 
+          content: {}  
+    delete:
+      tags:
+        - Tasks
+      summary: Deletes the task specified using its ID.
+      parameters:
+        - name: task_id
+          in: path
+          required: true
+          description: The task's ID that you want to delete.
+          schema:
+            type: number
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message: 
+                    type: string
+                    description: Message that states that the delete job was successful.
+                    example: Task deleted.
+
+
+
