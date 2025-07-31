@@ -13,7 +13,7 @@ def create_app():
 
     @app.route("/")
     def serve_index():
-        return send_from_directory("static", "index.html")
+        return send_from_directory("app/static" , "index.html")
         
     @app.route("/health")
     def health():
