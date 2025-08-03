@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from app.models import Note
-from app import db
+from app.extensions import db
 
 notes_bp = Blueprint('notes', __name__)
 

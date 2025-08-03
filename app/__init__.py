@@ -1,3 +1,4 @@
+import os
 from flask import Flask, send_from_directory
 from app.extensions import db
 from app.routes import register_routes
@@ -13,7 +14,7 @@ def create_app():
 
     @app.route("/")
     def serve_index():
-        return send_from_directory("app/static" , "index.html")
+        return send_from_directory("static" , "index.html")
         
     @app.route("/health")
     def health():

@@ -1,0 +1,62 @@
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.item span:first-child {
+  flex-grow: 1;
+  padding-right: 1rem;
+  word-break: break-word;
+}
+
+.status {
+  display: inline-block;
+  width: 1.5rem;
+  text-align: center;
+  font-size: 1.2rem;
+  vertical-align: middle;
+}
+
+.delete {
+  width: 1.5rem;
+  text-align: center;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  color: red;
+}
+
+body {
+    font-family: sans-serif;
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+h2 {
+    margin-top: 2rem;
+}
+.item {
+    display: flex;
+    justify-content: space-between;
+    margin: 0.5rem 0;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+input[type="text"] {
+    flex-grow: 1;
+    padding: 0.4rem;
+    margin-right: 0.5rem;
+}
+button {
+    padding: 0.4rem 0.7rem;
+    cursor: pointer;
+}
+.form {
+    display: flex;
+    margin-bottom: 1rem;
+}
