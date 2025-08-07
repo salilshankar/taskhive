@@ -19,10 +19,15 @@ jobs:
         run: |
           ls -lh
           file project.zip
+      
+      - name: Unzip project.zip
+        run: |
+          unzip -l project.zip
       - name: Send to AutoDocAI 
         run: |
           echo "Current directory: $(pwd)"
           ls -lh
-          curl -f -i -X POST https://autodocai.net/generate-docs/secure/ \
-            -H "X-API-Key: ${{ secrets.AUTODOC_API_KEY }}" \
-            -F file=@project.zip
+          curl -f -v \
+          -H "X-API-Key: ${{ secrets.AUTODOC_API_KEY }}" \
+          -F "file=@project.zip" \
+          https://autodocai.net/generate-docs/secure/
