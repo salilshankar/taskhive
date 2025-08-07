@@ -24,9 +24,9 @@ jobs:
           du -sh project.zip
       - name: Send to AutoDocAI 
         run: |
-          echo "CWD: $(pwd)"
-          ls -lh project.zip
+          echo "Current directory: $(pwd)"
+          ls -lh
           curl -f -v \
-          -H "X-API-Key: ${{ secrets.AUTODOC_API_KEY }}" \
-          -F "file=@$(pwd)/project.zip;filename=project.zip;type=application/zip" \
-          https://autodocai.net/generate-docs/secure/
+            -H "X-API-Key: ${{ secrets.AUTODOC_API_KEY }}" \
+            --form "file=@project.zip" \
+            https://autodocai.net/generate-docs/secure/
