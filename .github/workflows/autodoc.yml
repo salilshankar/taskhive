@@ -16,14 +16,12 @@ jobs:
       - name: Zip the repo
         run: zip -r project.zip . -x "*.git*" "*.venv*" "__pycache__/*"
 
-      - name: Debug zip output
+      - name: Validate file before sending
         run: |
-          ls -lh
+          echo "Current directory: $(pwd)"
+          ls -lh project.zip
           file project.zip
-      
-      - name: Unzip project.zip
-        run: |
-          unzip -l project.zip
+          du -sh project.zip
       - name: Send to AutoDocAI 
         run: |
           echo "Current directory: $(pwd)"
