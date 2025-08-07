@@ -29,5 +29,5 @@ jobs:
           ls -lh
           curl -f -v \
           -H "X-API-Key: ${{ secrets.AUTODOC_API_KEY }}" \
-          -F "file=@project.zip" \
+          -F "file=@project.zip;filename=project.zip;type=application/zip" \
           https://autodocai.net/generate-docs/secure/
