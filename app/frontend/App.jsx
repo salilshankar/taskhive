@@ -6,6 +6,8 @@ function App() {
   const [notes, setNotes] = useState([]);
   const [newTask, setNewTask] = useState('');
   const [newNote, setNewNote] = useState('');
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [editedTaskTitle, setEditedTaskTitle] = useState('');
 
   useEffect(() => {
     loadData();
@@ -66,6 +68,22 @@ function App() {
     setNotes(notes.filter(n => n.id !== id));
   };
 
+  const startEditing = (task) => {
+    setEditingTaskId(task.id);
+    setEditedTaskTitle(task.title);
+  };
+
+  const saveEditedTask = async (task) => {
+    const updatedTask = { ...task, title: editedTaskTitle };
+    await fetch(`/api/tasks/${task.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedTask)
+    });
+    setTasks(tasks.map(t => t.id === task.id ? updatedTask : t));
+    setEditingTaskId(null);
+  };
+
   return (
     <div className="container">
       <h1>📝 TaskHive</h1>
@@ -83,17 +101,35 @@ function App() {
 
       {tasks.map(task => (
         <div className="item" key={task.id}>
-          <span>{task.title}</span>
-          <span
-            style={{ cursor: 'pointer' }}
-            onClick={() => toggleTask(task)}
-          >
-            <span className="status">{task.is_completed ? '✅' : '❌'}</span>
-          </span>
-          <span
-            className="delete"
-            onClick={() => deleteTask(task.id)}
-          >🗑️</span>
+          {editingTaskId === task.id ? (
+            <>
+              <input
+                type="text"
+                value={editedTaskTitle}
+                onChange={e => setEditedTaskTitle(e.target.value)}
+              />
+              <button onClick={() => saveEditedTask(task)}>💾</button>
+              <button onClick={() => setEditingTaskId(null)}>❌</button>
+            </>
+          ) : (
+            <>
+              <span>{task.title}</span>
+              <span
+                style={{ cursor: 'pointer', marginLeft: '0.5rem' }}
+                onClick={() => startEditing(task)}
+              >✏️</span>
+              <span
+                style={{ cursor: 'pointer' }}
+                onClick={() => toggleTask(task)}
+              >
+                <span className="status">{task.is_completed ? '✅' : '❌'}</span>
+              </span>
+              <span
+                className="delete"
+                onClick={() => deleteTask(task.id)}
+              >🗑️</span>
+            </>
+          )}
         </div>
       ))}
 
